@@ -33,7 +33,10 @@ stonithd (Cluster Fencing Daemon)
 	   -> VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
 	      -> VMWare ESXi Hypervisor (Virtual Machine On/Off)
 	      
-IMPORTANT: Right the plugin not permits declaring two diferent VMWare VCenter devices for fencing the same list of cluster nodes. But could be tested and implemented changing the attribute "unique" to "false" for the "hostlist" parameter in the plugin XML definition schema.
+IMPORTANT: Right the plugin not permits declaring two diferent VMWare VCenter
+devices for fencing the same list of cluster nodes. But could be tested and 
+implemented changing the attribute "unique" to "false" for the "hostlist" 
+parameter in the plugin XML definition schema.
 
 --------------
  Requirements
@@ -75,9 +78,12 @@ rpm -i --nodeps fence-agents-4.0.10-2.4.1.x86_64.rpm
  Plugin Installation
 ---------------------
 
-*** CAUTION: Use the version 15/01/2015 of fence_vmware_soap stonith plugin agent, which includes compatibility for the fence_vmware_soap script provided by both fence-agents versions (3.X and 4.X). ***
+*** CAUTION: Use the version 15/01/2015 of fence_vmware_soap stonith plugin agent, 
+which includes compatibility for the fence_vmware_soap script provided 
+by both fence-agents versions (3.X and 4.X). ***
 
-Copy the fence_vmware_soap.sh stonith plugin agent to ONE of the following EXISTENT directories with the following NAME (Strip the .sh extension):
+Copy the fence_vmware_soap.sh stonith plugin agent to ONE of the following EXISTENT
+directories with the following NAME (Strip the .sh extension):
 - /usr/lib/stonith/plugins/external/fence_vmware_soap
 - /usr/lib64/stonith/plugins/external/fence_vmware_soap
 
@@ -113,10 +119,13 @@ The output should be something like this (and different for each cluster node):
 Extract the cluster node names (the same defined in the cluster configuration, example: node1, node2):
 uname -n
 
-Determine the VMWare VCenter IPv4 address controlling the VMWare ESX Hypervisor Hosts serving the Virtual Machines:
+Determine the VMWare VCenter IPv4 address controlling the VMWare ESX Hypervisor Hosts 
+serving the Virtual Machines:
+
 <VCenterIP> (Ask the virtualization platform administrator)
 
-Obtain the VMWare VCenter credentials (VCenterUser and VCenterPassword) with fencing permissions, for more information look at:
+Obtain the VMWare VCenter credentials (VCenterUser and VCenterPassword) with fencing permissions, 
+for more information look at:
   
   "What user permissions/roles are required for the VMware vCenter 
   user account to perform fence action using fence_vmware_soap?"
@@ -128,7 +137,8 @@ Obtain the VMWare VCenter credentials (VCenterUser and VCenterPassword) with fen
 
 *** NOTICE: The following test DO NOT require cluster configuration modifications!. ***
 
-First, test the correct function of the command "fence_vmware_soap" provided by package "fence-agents" issuing the following command (CAUTION: Cluster nodes will be restarted!):
+First, test the correct function of the command "fence_vmware_soap" provided 
+by package "fence-agents" issuing the following command (CAUTION: Cluster nodes will be restarted!):
 
 On fence-agents 3.X issuing the command:
 fence_vmware_soap -o reboot -a <VCenterIP> -l "<VCenterUser>" -p "<VCenterPassword>" -z -U "<UUID>"
@@ -138,13 +148,15 @@ fence_vmware_soap -o reboot -a <VCenterIP> -l "<VCenterUser>" -p "<VCenterPasswo
 
 Second, test fencing plugin agent (CAUTION: Cluster nodes will be restarted):
 
-stonith -t "external/fence_vmware_soap" hostlist="node1,uuid1;node2,uuid2" vcenterip="<VCenterIP>" username="<VCenterUser>" password="<VCenterPassword>" <node1|node2>
+stonith -t "external/fence_vmware_soap" hostlist="node1,uuid1;node2,uuid2" \
+ vcenterip="<VCenterIP>" username="<VCenterUser>" password="<VCenterPassword>" <node1|node2>
 
 The ouput of this command should be something like this (the last line is the must important):
 
 info: external_run_cmd: '/usr/lib/stonith/plugins/external/fence_vmware_soap reset vsaporat1' output: Success: Rebooted
 
-The following messages can be safely ignored as they only warns about the "--ssl-insecure" parameter included by plugin in order to allow the use of self-signed certificates for the SSL tunnel:
+The following messages can be safely ignored as they only warns about the "--ssl-insecure" 
+parameter included by plugin in order to allow the use of self-signed certificates for the SSL tunnel:
 /usr/local/lib64/python2.6/site-packages/requests-2.5.1-py2.6.egg/requests/packages/urllib3/connectionpool.py:734: InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.org/en/latest/security.html
 
 The plugin agent output to syslog (or messages) entries tagged as "fence_vmware_soap" for debugging purposes:
@@ -166,7 +178,8 @@ If all the previous test are passed so the nodes are correctly restarted, everyt
 
 *** NOTICE: The following test DO REQUIRE cluster configuration modifications!. ***
 
-It is important to DELETE current stonith devices and DISABLE stonith components to avoid fencing device conflicts:
+It is important to DELETE current stonith devices and DISABLE stonith components 
+to avoid fencing device conflicts:
 
 crm configure 
 property stonith-enabled=false
@@ -206,9 +219,11 @@ property stonith-action="reboot"
 commit
 exit
 
-After the previous configuration, both nodes should be restarted, in order to do the final certification tests.
+After the previous configuration, both nodes should be restarted, in order to do
+the final certification tests.
 
-First, disable heartbeat NIC/Ethernet (ifdown eth0) in one node, then you should see in the syslog the same entries about fencing actions shown at the previous fencing tests.
+First, disable heartbeat NIC/Ethernet (ifdown eth0) in one node, then you should 
+see in the syslog the same entries about fencing actions shown at the previous fencing tests.
 
 Finally, do the same in the other node.
 
