@@ -5,9 +5,9 @@ Author:
   Olaf Reitmaier <olafrv@gmail.com>
 Version:
   16/Jan/2015
-License: 
-  Creative Common Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
-  http://creativecommons.org/licenses/by-sa/4.0/
+License:
+  GNU General Public License (GPL) v3
+  http://www.gnu.org/licenses/gpl.html
 
 ------------------------------------------
  Tested on the following virtual platform
