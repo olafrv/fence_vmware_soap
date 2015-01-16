@@ -32,6 +32,8 @@ stonithd (Cluster Fencing Daemon)
     -> /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)
 	   -> VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
 	      -> VMWare ESXi Hypervisor (Virtual Machine On/Off)
+	      
+IMPORTANT: Right the plugin not permits declaring two diferent VMWare VCenter devices for fencing the same list of cluster nodes. But could be tested and implemented changing the attribute "unique" to "false" for the "hostlist" parameter in the plugin XML definition schema.
 
 --------------
  Requirements
