@@ -1,7 +1,7 @@
 # fence_vmware_soap
-Stonith Plugin Agent for VMWare VM VCenter SOAP Fencing (Unofficial)
+Stonith Plugin Agent for VMWare VM VCenter SOAP Fencing (Unofficial).
 
-Helpful when Stonith version does not include "fence_vmare_soap" plugin agent, some cases are:
+Helpful when stonith version does not include "fence_vmare_soap" plugin agent, some cases are:
 
 - Canonical Ubuntu Linux 14.04 LTS
 - SUSE Enterprise Linux 11 SP3
