@@ -2,7 +2,7 @@
 
 ##
 # This STONITH script executes fencing via fence_vmware_soap
-# agents available from package 'fence-agents' (RedHat).
+# agents available from package 'fence-agents'.
 #
 # Author:
 #  Olaf Reitmaier <olafrv@gmail.com>
