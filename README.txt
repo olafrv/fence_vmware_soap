@@ -75,9 +75,9 @@ rpm -i --nodeps fence-agents-4.0.10-2.4.1.x86_64.rpm
 
 *** CAUTION: Use the version 15/01/2015 of fence_vmware_soap stonith plugin agent, which includes compatibility for the fence_vmware_soap script provided by both fence-agents versions (3.X and 4.X). ***
 
-Copy the fence_vmware_soap (bash script) stonith plugin agent to ONE of the following EXISTENT directories:
-- /usr/lib/stonith/plugins/external/
-- /usr/lib64/stonith/plugins/external/ 
+Copy the fence_vmware_soap.sh stonith plugin agent to ONE of the following EXISTENT directories with the following NAME (Strip the .sh extension):
+- /usr/lib/stonith/plugins/external/fence_vmware_soap
+- /usr/lib64/stonith/plugins/external/fence_vmware_soap
 
 For more information, about the stonith plugin agents visit the following links:
 - 8.1. STONITH Agents: https://doc.opensuse.org/products/draft/SLE-HA/SLE-ha-guide_sd_draft/cha.ha.agents.html
