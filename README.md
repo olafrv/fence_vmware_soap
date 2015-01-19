@@ -15,9 +15,9 @@ Helpful when stonith version does not include "fence_vmare_soap" plugin agent, s
 4. VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)<br>
 5. VMWare ESXi Hypervisor (Virtual Machine On/Off).<br>
 
-## Warning
+## Notice
 
-<b>IMPORTANT:</b> Right now the plugin not permits declaring two diferent VMWare VCenter
+Right now the plugin not permits declaring two diferent VMWare VCenter
 devices for fencing the same list of cluster nodes. But could be tested and
 implemented changing the attribute "unique" to "false" for the "hostlist"
 parameter in the plugin XML definition schema.
