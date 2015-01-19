@@ -23,17 +23,21 @@ License:
 - 14/Jan/2015 - Testing on Ubuntu Linux 14.04 64 bits.
 - 15/Jan/2015 - Implementation and testing on SLES Linux 11 SP3 64 bits.
 
----------------------
- Plugin Architecture
----------------------
+-----------------
+ Plugin Workflow
+-----------------
 
-stonithd (Cluster Fencing Daemon)
-  -> /usr/lib/stonith/plugins/external/fence_vmware_soap (Stonith Plugin Agent)
-    -> /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)
-	   -> VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
-	      -> VMWare ESXi Hypervisor (Virtual Machine On/Off)
+1. stonithd (Cluster Fencing Daemon)
+2. /usr/lib/stonith/plugins/external/fence_vmware_soap (Stonith Plugin Agent)
+3. /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)
+4. VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
+5. VMWare ESXi Hypervisor (Virtual Machine On/Off)
+
+--------
+ Notice
+--------
 	      
-IMPORTANT: Right now the plugin not permits declaring two diferent VMWare VCenter
+Right now the plugin not permits declaring two diferent VMWare VCenter
 devices for fencing the same list of cluster nodes. But could be tested and 
 implemented changing the attribute "unique" to "false" for the "hostlist" 
 parameter in the plugin XML definition schema.
