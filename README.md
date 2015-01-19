@@ -8,11 +8,11 @@ Helpful when stonith version does not include "fence_vmare_soap" plugin agent, s
 
 Plugin Architecture
 
-stonithd (Cluster Fencing Daemon)
--> /usr/lib/stonith/plugins/external/fence_vmware_soap (Stonith Plugin Agent)
--> /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)
--> VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
--> VMWare ESXi Hypervisor (Virtual Machine On/Off).
+stonithd (Cluster Fencing Daemon)<br>
+-> /usr/lib/stonith/plugins/external/fence_vmware_soap (Stonith Plugin Agent)<br>
+-> /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)<br>
+-> VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)<br>
+-> VMWare ESXi Hypervisor (Virtual Machine On/Off).<br>
 
 IMPORTANT: Right now the plugin not permits declaring two diferent VMWare VCenter
 devices for fencing the same list of cluster nodes. But could be tested and
