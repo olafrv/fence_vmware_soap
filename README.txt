@@ -1,5 +1,5 @@
 ---------------------------------------------------------
- Stonith Plugin Agent for VMWare VM VCenter SOAP Fencing
+ Stonith Plugin Agent for VMWare VM vCenter SOAP Fencing
 ---------------------------------------------------------
 Author: 
   Olaf Reitmaier <olafrv@gmail.com>
@@ -12,9 +12,10 @@ License:
 ------------------------------------------
  Tested on the following virtual platform
 ------------------------------------------
-- Ubuntu Linux Server Edition 14.04 64 bits (Peacemaker/Heartbeat).
-- SUSE Enterprise Linux 11 SP3 64 bits (Peacemaker/Heartbeat).
-- VMWare ESXi/VCenter 5.1 U1 (Used as Fencing Device)
+- Ubuntu Linux Server Edition 14.04 64 bits (Pacemaker/Heartbeat).
+- SUSE Enterprise Linux 11 SP3 64 bits (Pacemaker/Heartbeat).
+- SUSE Enterprise Linux 11 SP4 64 bits (Pacemaker/Corosync).
+- VMWare ESXi/vCenter 5.1 U1 (Used as Fencing Device)
 
 ---------
  History
@@ -22,6 +23,7 @@ License:
 
 - 14/Jan/2015 - Testing on Ubuntu Linux 14.04 64 bits.
 - 15/Jan/2015 - Implementation and testing on SLES Linux 11 SP3 64 bits.
+- 25/Oct/2015 - Testing on SLES Linux 11 SP4 64 bits.
 
 -----------------
  Plugin Workflow
@@ -30,14 +32,14 @@ License:
 1. stonithd (Cluster Fencing Daemon)
 2. /usr/lib/stonith/plugins/external/fence_vmware_soap (Stonith Plugin Agent)
 3. /usr/sbin/fence_vmware_soap (SOAP Fence Request, provided by fence-agents)
-4. VMWareVCenter (SOAP Web Service, Authentication, Search, Triggering)
+4. VMWare vCenter (SOAP Web Service, Authentication, Search, Triggering)
 5. VMWare ESXi Hypervisor (Virtual Machine On/Off)
 
 --------
  Notice
 --------
 	      
-Right now the plugin not permits declaring two diferent VMWare VCenter
+Right now the plugin not permits declaring two different VMWare vCenter
 devices for fencing the same list of cluster nodes. But could be tested and 
 implemented changing the attribute "unique" to "false" for the "hostlist" 
 parameter in the plugin XML definition schema.
@@ -47,7 +49,7 @@ parameter in the plugin XML definition schema.
 --------------
  
 - Fully functional Linux operating system (VMWare Virtual Machines).
-- Fully functional Peacemaker/Heartbeat cluster (Know How About It).
+- Fully functional Pacemaker/Heartbeat cluster (Know How About It).
 
 ------------------------------
  Packages needed Ubuntu 14.04
@@ -65,7 +67,7 @@ http://software.opensuse.org/package/fence-agents?search_term=fence-agents
 In order to download the package execute the following command:
 wget http://download.opensuse.org/repositories/openSUSE:/13.2/standard/x86_64/fence-agents-4.0.10-2.4.1.x86_64.rpm
 
-Many fence agents depends on Python libraries, some could be installed directly:
+Many fence agents depend on Python libraries, some could be installed directly:
 zypper install python-curl python-openssl python-pexpect python-request
 
 And other must be installed using python setup tools (https://pypi.python.org/pypi/setuptools) as follows:
@@ -77,6 +79,27 @@ easy_install requests suds
 
 Now cleanly you can install the "fence-agents" package downloaded previously:
 rpm -i --nodeps fence-agents-4.0.10-2.4.1.x86_64.rpm
+
+-----------------------------
+ Packages needed SUSE 11 SP4
+-----------------------------
+
+fence-agents, version 4.0.12 is provided by SUSE Linux Enterprise High Availability Extension 11 SP4:
+https://www.suse.com/products/highavailability/download/
+
+In order to just install the package via the YaST2 repositories (if the HA extension is enabled):
+zypper install fence-agents
+
+Many fence agents depend on Python libraries, available with SLES 11 SP4 (and/or the HA extension):
+zypper install python-curl python-openssl python-pexpect python-requests python-suds
+
+Manual installation based on SLES-11-SP4-DVD-x86_64-GM-DVD1.iso and SLE-HA-11-SP4-x86_64-GM-CD1.iso:
+fence-agents-4.0.12-1.45.x86_64.rpm -> SLE-HA-11-SP4-x86_64-GM-CD1.iso
+python-curl-7.19.0-5.2.1.2.x86_64.rpm -> SLES-11-SP4-DVD-x86_64-GM-DVD1.iso
+python-openssl-0.7.0-1.17.2.x86_64.rpm ->  SLES-11-SP4-DVD-x86_64-GM-DVD1.iso
+python-pexpect-3.1-0.7.1.x86_64.rpm -> SLE-HA-11-SP4-x86_64-GM-CD1.iso
+python-requests-2.0.1-0.9.37.x86_64.rpm -> SLES-11-SP4-DVD-x86_64-GM-DVD1.iso
+python-suds-0.4-0.20.1.x86_64.rpm -> SLE-HA-11-SP4-x86_64-GM-CD1.iso
 
 ---------------------
  Plugin Installation
@@ -92,7 +115,7 @@ directories with the following NAME (Strip the .sh extension):
 - /usr/lib64/stonith/plugins/external/fence_vmware_soap
 
 For more information, about the stonith plugin agents visit the following links:
-- 8.1. STONITH Agents: https://doc.opensuse.org/products/draft/SLE-HA/SLE-ha-guide_sd_draft/cha.ha.agents.html
+- 8.1. STONITH Agents: https://www.suse.com/documentation/sle_ha/book_sleha/data/sec_ha_stonithagents.html
 - External STONITH Plugins: http://www.linux-ha.org/ExternalStonithPlugins
 
 Give the following permissions:
@@ -123,7 +146,7 @@ The output should be something like this (and different for each cluster node):
 Extract the cluster node names (the same defined in the cluster configuration, example: node1, node2):
 uname -n
 
-Determine the VMWare VCenter IPv4 address controlling the VMWare ESX Hypervisor Hosts 
+Determine the VMWare vCenter IPv4 address controlling the VMWare ESX Hypervisor Hosts 
 serving the Virtual Machines:
 
 <VCenterIP> (Ask the virtualization platform administrator)
