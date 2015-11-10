@@ -15,7 +15,7 @@ Helpful when stonith version does not include "fence_vmare_soap" plugin agent, s
 
 ## Notice
 
-Right now the plugin not permits declaring two diferent VMWare VCenter
+Right now the plugin not permits declaring two different VMWare VCenter
 devices for fencing the same list of cluster nodes. But could be tested and
 implemented by changing the attribute "unique" to "false" for the "hostlist"
 parameter in the plugin XML definition schema.
