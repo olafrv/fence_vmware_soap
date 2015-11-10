@@ -101,6 +101,24 @@ python-pexpect-3.1-0.7.1.x86_64.rpm -> SLE-HA-11-SP4-x86_64-GM-CD1.iso
 python-requests-2.0.1-0.9.37.x86_64.rpm -> SLES-11-SP4-DVD-x86_64-GM-DVD1.iso
 python-suds-0.4-0.20.1.x86_64.rpm -> SLE-HA-11-SP4-x86_64-GM-CD1.iso
 
+Unfortunately fence-agents-4.0.12-1.45 contains a bug resulting in the following behaviour/output:
+
+$ fence_vmware_soap -a <VCenterIP> -l "<VCenterUser>" -p "<VCenterPassword>"
+Traceback (most recent call last):
+  File "/usr/sbin/fence_vmware_soap", line 257, in <module>
+    main()
+  File "/usr/sbin/fence_vmware_soap", line 223, in main
+    options_global = check_input(device_opt, process_input(device_opt))
+  File "/usr/share/fence/fencing.py", line 721, in check_input
+    logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stderr))
+TypeError: __init__() got an unexpected keyword argument 'stream'
+$
+
+A non-update safe fix for this bug can be easily applied using the command
+sed -e 's/stream=sys.stderr/sys.stderr/' -i /usr/share/fence/fencing.py
+while the unified diff of this fix can be seen at upstream at:
+https://github.com/ClusterLabs/fence-agents/commit/b914f75f5c467f7faf1184e786b44f74ba8dddb4
+
 ---------------------
  Plugin Installation
 ---------------------
